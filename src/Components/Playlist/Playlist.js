@@ -8,7 +8,7 @@ const Playlist = () => {
       <Box
         p={{ xs: 3, md: 4 }}
         sx={{
-          widht: "100%",
+          width: "100%",
           background:
             "linear-gradient(0deg, rgba(17,38,25,1) 0%, rgba(24,115,38,1) 100%);",
           display: "flex",
