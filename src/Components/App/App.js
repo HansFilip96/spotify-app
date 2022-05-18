@@ -4,6 +4,7 @@ import SideNav from "../SideNav/SideNav";
 import Playlist from "../Playlist/Playlist";
 import { box } from "@mui/material";
 import { border, Box } from "@mui/system";
+import MobileNav from "../MobileNav/MobileNav";
 
 const mockData = [
   { name: "Rock", playlistId: 123, image: "/Justin-Bieber.png" },
@@ -11,6 +12,79 @@ const mockData = [
   { name: "Hip hop", playlistId: 834, image: "/Justin-Bieber.png" },
   { name: "X-mas", playlistId: 5503, image: "/Justin-Bieber.png" },
   { name: "Code life", playlistId: 4832, image: "/Justin-Bieber.png" },
+];
+
+const songs = [
+  {
+    image: "/Justin-Bieber.png",
+    title: "Holy",
+    artist: "Justin Bieber",
+    album: "No clue",
+    duration: 180,
+  },
+  {
+    image: "/Justin-Bieber.png",
+    title: "Holy",
+    artist: "Justin Bieber",
+    album: "No clue",
+    duration: 180,
+  },
+  {
+    image: "/Justin-Bieber.png",
+    title: "Holy",
+    artist: "Justin Bieber",
+    album: "No clue",
+    duration: 180,
+  },
+  {
+    image: "/Justin-Bieber.png",
+    title: "Holy",
+    artist: "Justin Bieber",
+    album: "No clue",
+    duration: 180,
+  },
+  {
+    image: "/Justin-Bieber.png",
+    title: "Holy",
+    artist: "Justin Bieber",
+    album: "No clue",
+    duration: 180,
+  },
+  {
+    image: "/Justin-Bieber.png",
+    title: "Holy",
+    artist: "Justin Bieber",
+    album: "No clue",
+    duration: 180,
+  },
+  {
+    image: "/Justin-Bieber.png",
+    title: "Holy",
+    artist: "Justin Bieber",
+    album: "No clue",
+    duration: 180,
+  },
+  {
+    image: "/Justin-Bieber.png",
+    title: "Holy",
+    artist: "Justin Bieber",
+    album: "No clue",
+    duration: 180,
+  },
+  {
+    image: "/Justin-Bieber.png",
+    title: "Holy",
+    artist: "Justin Bieber",
+    album: "No clue",
+    duration: 180,
+  },
+  {
+    image: "/Justin-Bieber.png",
+    title: "Holy",
+    artist: "Justin Bieber",
+    album: "No clue",
+    duration: 180,
+  },
 ];
 
 function App() {
@@ -26,26 +100,33 @@ function App() {
       >
         <Box sx={{ flex: 1, overflowY: "auto", display: "flex" }}>
           <SideNav playlists={mockData} />
-          <Playlist />
+          <Playlist songs={songs} />
         </Box>
-        <Box
-          sx={{
-            width: "100%",
-            height: 25,
-            bgcolor: "primary.main",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "flex-end",
-            fontSize: 14,
-            boxSizing: "border-box",
-            paddingRight: 10,
-          }}
-        >
-          Made with ♡ by Filip Samuelsson
-        </Box>
+        <MobileNav />
+        <Banner />
       </Box>
     </Box>
   );
 }
+
+const Banner = () => {
+  return (
+    <Box
+      sx={{
+        width: "100%",
+        height: 25,
+        bgcolor: "primary.main",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "flex-end",
+        fontSize: 14,
+        boxSizing: "border-box",
+        paddingRight: 10,
+      }}
+    >
+      Made with ♡ by Filip Samuelsson
+    </Box>
+  );
+};
 
 export default App;

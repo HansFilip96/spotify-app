@@ -1,8 +1,8 @@
 import React from "react";
 import { Box, Avatar, Typography } from "@mui/material";
-import { height } from "@mui/system";
+import SongTable from "../SongTable/SongTable";
 
-const Playlist = () => {
+const Playlist = ({ songs }) => {
   return (
     <Box sx={{ bgcolor: "Background.paper", flex: 1, overflowY: "auto" }}>
       <Box
@@ -38,6 +38,7 @@ const Playlist = () => {
           </Typography>
         </Box>
       </Box>
+      <SongTable songs={songs} />
     </Box>
   );
 };
