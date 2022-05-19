@@ -5,6 +5,8 @@ import Playlist from "../Playlist/Playlist";
 import { box } from "@mui/material";
 import { border, Box } from "@mui/system";
 import MobileNav from "../MobileNav/MobileNav";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
+import Player from "../Player/Player";
 
 const mockData = [
   { name: "Rock", playlistId: 123, image: "/Justin-Bieber.png" },
@@ -100,8 +102,24 @@ function App() {
       >
         <Box sx={{ flex: 1, overflowY: "auto", display: "flex" }}>
           <SideNav playlists={mockData} />
-          <Playlist songs={songs} />
+
+          <Routes>
+            <Route path="/playlist/:id" element={<Playlist songs={songs} />} />
+            <Route
+              path="/search"
+              element={<h1 style={{ color: "white" }}>Search</h1>}
+            />
+            <Route
+              path="/library"
+              element={<h1 style={{ color: "white" }}>library</h1>}
+            />
+            <Route
+              path="/"
+              element={<h1 style={{ color: "white" }}>Home</h1>}
+            />
+          </Routes>
         </Box>
+        <Player />
         <MobileNav />
         <Banner />
       </Box>
