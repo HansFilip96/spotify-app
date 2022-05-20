@@ -7,6 +7,8 @@ import { border, Box } from "@mui/system";
 import MobileNav from "../MobileNav/MobileNav";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Player from "../Player/Player";
+import Home from "../Home/Home";
+import Library from "../Library/Library";
 
 const mockData = [
   { name: "Rock", playlistId: 123, image: "/Justin-Bieber.png" },
@@ -111,12 +113,9 @@ function App() {
             />
             <Route
               path="/library"
-              element={<h1 style={{ color: "white" }}>library</h1>}
+              element={<Library playlists={mockData} loading={false} />}
             />
-            <Route
-              path="/"
-              element={<h1 style={{ color: "white" }}>Home</h1>}
-            />
+            <Route path="/" element={<Home />} />
           </Routes>
         </Box>
         <Player />

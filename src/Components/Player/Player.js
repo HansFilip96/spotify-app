@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Grid, Typography, Avatar } from "@mui/material";
-// import PlayerControlls from "../PlayerControlls/PlayerControlls";
+import PlayerControlls from "../PlayerControlls/PlayerControlls";
 import VolumeControlls from "../VolumeControlls/VolumeControlls";
 
 const Player = () => {
@@ -72,7 +72,7 @@ const Player = () => {
             </Typography>
           </Box>
         </Grid>
-        {/* <PlayerControlls sliderStyle={sliderStyle} /> */}
+        <PlayerControlls sliderStyle={sliderStyle} />
         <VolumeControlls sliderStyle={sliderStyle} />
       </Grid>
     </Box>
