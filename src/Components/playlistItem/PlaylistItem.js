@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-const PlaylistItem = ({ name, image, loading, playlistId }) => {
+const PlaylistItem = ({ name, images, id, loading }) => {
   const navigate = useNavigate();
   if (loading) {
     return (
@@ -26,9 +26,14 @@ const PlaylistItem = ({ name, image, loading, playlistId }) => {
   }
   return (
     <ListItem disablePadding>
-      <ListItemButton onClick={() => navigate(`/playlist/${playlistId}`)}>
+      <ListItemButton onClick={() => navigate(`/playlist/${id}`)}>
         <ListItemAvatar sx={{ marginRight: "16px" }}>
-          <Avatar src={image} variant="square" width={60} height={60}></Avatar>
+          <Avatar
+            src={images?.[0]?.url}
+            variant="square"
+            width={60}
+            height={60}
+          ></Avatar>
         </ListItemAvatar>
         <ListItemText primary={name} sx={{ color: "text.primary" }} />
       </ListItemButton>

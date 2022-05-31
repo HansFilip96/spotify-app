@@ -4,11 +4,16 @@ import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import NavItem from "../NavItem/NavItem";
 import NavPlaylist from "../NavPlaylist/NavPlaylist";
+import { connect } from "react-redux";
 
-const SideNav = ({ playlists }) => {
-  const renderPlaylists = (second) => {
+const SideNav = ({ playlists, loading }) => {
+  const renderPlaylists = () => {
+    if (loading)
+      return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((e) => (
+        <NavPlaylist loading={loading} key={e} />
+      ));
     return playlists.map((playlist, i) => (
-      <NavPlaylist {...playlist} key={i} />
+      <NavPlaylist id={playlist.id} name={playlist.name} key={i} />
     ));
   };
   return (
@@ -34,4 +39,11 @@ const SideNav = ({ playlists }) => {
   );
 };
 
-export default SideNav;
+const mapStateToProps = (state) => {
+  return {
+    playlists: state.playlist.items,
+    loading: state.playlist.loading,
+  };
+};
+
+export default connect(mapStateToProps)(SideNav);

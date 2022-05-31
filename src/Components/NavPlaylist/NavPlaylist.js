@@ -1,10 +1,13 @@
 import React from "react";
-import { Box } from "@mui/material";
+import { Box, Skeleton } from "@mui/material";
 import { Link } from "react-router-dom";
 
-const NavPlaylist = ({ name, playlistId }) => {
+const NavPlaylist = ({ name, id, loading }) => {
   return (
-    <Link to={`/playlist/${playlistId}`}>
+    <Link
+      to={loading ? "" : `/playlist/${id}`}
+      style={{ textDecoration: "none" }}
+    >
       <Box
         p={3}
         py={1}
@@ -15,7 +18,11 @@ const NavPlaylist = ({ name, playlistId }) => {
           "&:hover": { color: "text.primary" },
         }}
       >
-        {name}
+        {loading ? (
+          <Skeleton variant={"text"} height={"20px"} width={"80px"} />
+        ) : (
+          name
+        )}
       </Box>
     </Link>
   );

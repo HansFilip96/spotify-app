@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const NavItem = ({ name, Icon, target, active }) => {
   return (
-    <Link to={target}>
+    <Link to={target} style={{ textDecoration: "none" }}>
       <Box
         px={3}
         py={1}

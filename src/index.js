@@ -7,8 +7,15 @@ import { ThemeOptions } from "./style/material-themes";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import configureStore from "./store/configureStore";
+import SpotifyWebApi from "spotify-web-api-node";
 
-const store = configureStore();
+const spotifyApi = new SpotifyWebApi({
+  clientID: "ca04cee3e771432e97806ba503a7b086",
+  client_Secret: "0b27b90b36af404f90744aa726116ff4",
+  redirectUri: "http://localhost:3000/",
+});
+
+const store = configureStore(spotifyApi);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -16,7 +23,7 @@ root.render(
     <Provider store={store}>
       <BrowserRouter>
         <ThemeProvider theme={ThemeOptions}>
-          <App />
+          <App spotifyApi={spotifyApi} />
         </ThemeProvider>
       </BrowserRouter>
     </Provider>
