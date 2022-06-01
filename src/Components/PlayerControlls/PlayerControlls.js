@@ -15,9 +15,25 @@ const PlayerControlls = ({
   playNewSong,
   setProgress,
   spotifyApi,
+  duration,
 }) => {
   const skipStyle = { width: 28, height: 28 };
-  const songDuration = 195;
+
+  useEffect(() => {
+    let intervalId = null;
+    if (playing) {
+      intervalId = setInterval(() => {
+        setProgress(progress + 1);
+      }, 1000);
+    } else if (!playing && progress !== 0) {
+      clearInterval(intervalId);
+    }
+
+    return () => {
+      // Unmount lifecycle
+      clearInterval(intervalId);
+    };
+  }, [playing, progress]);
 
   const togglePlay = async () => {
     if (loading) return;
@@ -33,6 +49,28 @@ const PlayerControlls = ({
       await spotifyApi.pause();
     }
   };
+
+  const handleOnSkipPrevious = async () => {
+    if (loading) return;
+    await spotifyApi.skipToPrevious();
+    playNewSong(spotifyApi, {});
+  };
+
+  const handleOnSkipNext = async () => {
+    if (loading) return;
+    await spotifyApi.skipToNext();
+    playNewSong(spotifyApi, {});
+  };
+
+  const handleOnChange = (event, value) => {
+    console.log(value);
+    setProgress(value);
+  };
+
+  const handleOnChangeCommitted = (event, value) => {
+    spotifyApi.seek(value * 1000);
+  };
+
   return (
     <Grid
       item
@@ -57,7 +95,11 @@ const PlayerControlls = ({
           alignItems="center"
           sx={{ width: "100%" }}
         >
-          <IconButton size="small" sx={{ color: "text.primary" }}>
+          <IconButton
+            size="small"
+            sx={{ color: "text.primary" }}
+            onClick={async () => handleOnSkipPrevious()}
+          >
             <SkipPrevious sx={skipStyle} />
           </IconButton>
           <IconButton
@@ -71,7 +113,11 @@ const PlayerControlls = ({
               <PlayArrow sx={{ width: 38, height: 38 }} />
             )}
           </IconButton>
-          <IconButton size="small" sx={{ color: "text.primary" }}>
+          <IconButton
+            size="small"
+            sx={{ color: "text.primary" }}
+            onClick={async () => handleOnSkipNext()}
+          >
             <SkipNext sx={skipStyle} />
           </IconButton>
         </Stack>
@@ -86,20 +132,22 @@ const PlayerControlls = ({
             variant="body1"
             sx={{ color: "text.secondary", fontSize: 12 }}
           >
-            {formatTime(44)}
+            {formatTime(progress)}
           </Typography>
           <Slider
             min={0}
-            max={songDuration}
+            max={duration}
             sx={sliderStyle}
             size="medium"
-            value={97}
+            value={progress}
+            onChange={handleOnChange}
+            onChangeCommitted={handleOnChangeCommitted}
           />
           <Typography
             variant="body1"
             sx={{ color: "text.secondary", fontSize: 12 }}
           >
-            {formatTime(44)}
+            {formatTime(duration)}
           </Typography>
         </Stack>
       </Stack>
@@ -121,8 +169,8 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     pause: () => dispatch(pause()),
-    playNewSong: (api) => dispatch(pause(api)),
-    setProgress: (progress) => dispatch(pause(progress)),
+    playNewSong: (api) => dispatch(playNewSong(api)),
+    setProgress: (progress) => dispatch(setProgress(progress)),
   };
 };
 

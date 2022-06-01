@@ -28,14 +28,43 @@ export const updatePlayerFail = (error) => {
   return { type: actionTypes.UPDATE_PLAYER_FAIL, payload: error };
 };
 
-export const playNewSong = (spotifyApi, song) => {
+export const playSpecifiedSong = (spotifyApi, song) => {
   return async (dispatch) => {
     dispatch(updatePlayerStart());
     try {
       await spotifyApi.play(song);
-      const track = await getMyCurrentPlayingTrack(spotifyApi);
+      const { title, image, artist, duration, position } = song;
+      dispatch(
+        updatePlayerSuccess({
+          title,
+          image,
+          artist,
+          duration,
+          position,
+          progress: 0,
+        })
+      );
       dispatch(play());
-      dispatch(updatePlayerSuccess(track));
+    } catch (error) {
+      dispatch(updatePlayerFail(error));
+    }
+  };
+};
+
+export const playNewSong = (spotifyApi, song) => {
+  return async (dispatch) => {
+    dispatch(updatePlayerStart());
+    console.log("hejsan");
+    try {
+      await spotifyApi.play(song);
+
+      dispatch(play());
+
+      // jävligt dålig kod!
+      setTimeout(async () => {
+        const track = await getMyCurrentPlayingTrack(spotifyApi);
+        dispatch(updatePlayerSuccess(track));
+      }, 1000);
     } catch (error) {
       dispatch(updatePlayerFail(error));
     }
@@ -62,6 +91,7 @@ export const updateSongInfoStart = (spotifyApi) => {
       const state = getState();
       const { device_id } = state.player;
       const playback = await spotifyApi.getMyCurrentPlaybackState();
+      console.log({ playback });
       //  check if a device is playing music right now
       if (playback.body && playback.body.is_playing) {
         await spotifyApi.transferMyPlayback([device_id], true);
@@ -77,7 +107,7 @@ export const updateSongInfoStart = (spotifyApi) => {
             const currentSong = await spotifyApi.getMyCurrentPlayingTrack();
             if (currentSong.body) {
               clearInterval(id);
-              dispatch(updateSongInfoStart(spotifyApi));
+              dispatch(updateSongInfo(spotifyApi));
             }
           }, 500);
         }

@@ -8,4 +8,5 @@ export {
   updateSongInfo,
   playNewSong,
   setProgress,
+  playSpecifiedSong,
 } from "./player";
