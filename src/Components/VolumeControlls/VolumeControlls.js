@@ -6,6 +6,14 @@ const VolumeControlls = ({ sliderStyle, spotifyApi }) => {
   const defaultVolume = 40;
   const [volume, setVolume] = useState(defaultVolume);
 
+  const handleVolumeChange = async (event, value) => {
+    try {
+      await spotifyApi.setVolume(value);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Grid
       item
@@ -36,6 +44,9 @@ const VolumeControlls = ({ sliderStyle, spotifyApi }) => {
           value={volume}
           sx={sliderStyle}
           onChange={(event, newValue) => setVolume(newValue)}
+          onChangeCommitted={async (event, value) =>
+            handleVolumeChange(event, value)
+          }
         />
       </Stack>
     </Grid>
