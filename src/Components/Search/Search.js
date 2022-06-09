@@ -43,6 +43,9 @@ const Search = ({ spotifyApi }) => {
   return (
     <Box
       sx={{
+        bgcolor: "Background.paper",
+        flex: 1,
+        overflowY: "auto",
         minHeight: "calc(100vh - 90px)",
         bgcolor: "Background.paper",
         padding: "30px",

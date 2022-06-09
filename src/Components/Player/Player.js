@@ -4,8 +4,18 @@ import PlayerControlls from "../PlayerControlls/PlayerControlls";
 import VolumeControlls from "../VolumeControlls/VolumeControlls";
 import { connect } from "react-redux";
 import { updateSongInfoStart } from "../../store/actions";
+import PlayerOverlay from "../PlayerOverlay/PlayerOverlay";
+import { openOverlay } from "../../store/actions/index";
 
-const Player = ({ spotifyApi, updateSongInfoStart, title, artist, image }) => {
+const Player = ({
+  openOverlay,
+  spotifyApi,
+  updateSongInfoStart,
+  title,
+  artist,
+  image,
+  PlayerOverlayOpen,
+}) => {
   const sliderStyle = {
     color: "#fff",
     height: 4,
@@ -42,8 +52,14 @@ const Player = ({ spotifyApi, updateSongInfoStart, title, artist, image }) => {
     updateSongInfoStart(spotifyApi);
   }, []);
 
+  const handleOpenOverlay = () => {
+    if (!PlayerOverlayOpen) {
+      openOverlay();
+    }
+  };
+
   return (
-    <Box>
+    <Box onClick={handleOpenOverlay}>
       <Grid
         container
         px={3}
@@ -56,7 +72,8 @@ const Player = ({ spotifyApi, updateSongInfoStart, title, artist, image }) => {
       >
         <Grid
           item
-          xs={3}
+          xs={12}
+          md={3}
           sx={{
             display: "flex",
             alignItems: "center",
@@ -78,21 +95,33 @@ const Player = ({ spotifyApi, updateSongInfoStart, title, artist, image }) => {
             </Typography>
           </Box>
         </Grid>
-        <PlayerControlls sliderStyle={sliderStyle} spotifyApi={spotifyApi} />
+        <Grid
+          item
+          sx={{
+            display: { xs: "none", md: "flex" },
+            flex: 1,
+            justifyContent: { xs: "flex-end", md: "center" },
+            alignItems: "center",
+          }}
+        >
+          <PlayerControlls sliderStyle={sliderStyle} spotifyApi={spotifyApi} />
+        </Grid>
         <VolumeControlls sliderStyle={sliderStyle} spotifyApi={spotifyApi} />
       </Grid>
+      <PlayerOverlay sliderStyle={sliderStyle} spotifyApi={spotifyApi} />
     </Box>
   );
 };
 
 const mapState = (state) => {
-  const { title, artist, image } = state.player;
-  return { title, artist, image };
+  const { title, artist, image, PlayerOverlayOpen } = state.player;
+  return { title, artist, image, PlayerOverlayOpen };
 };
 
 const mapDispatch = (dispatch) => {
   return {
     updateSongInfoStart: (api) => dispatch(updateSongInfoStart(api)),
+    openOverlay: () => dispatch(openOverlay()),
   };
 };
 

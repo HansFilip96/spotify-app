@@ -9,4 +9,6 @@ export {
   playNewSong,
   setProgress,
   playSpecifiedSong,
+  openOverlay,
+  closeOverlay,
 } from "./player";
