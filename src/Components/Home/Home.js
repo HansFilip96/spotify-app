@@ -22,7 +22,7 @@ const Home = () => {
         size="large"
         variant="contained"
         onClick={() => {
-          window.location.href = "https://www.youtube.com/";
+          window.location.href = "https://my-portfolio-nu-wine.vercel.app/";
         }}
       >
         Kontakta Mig
